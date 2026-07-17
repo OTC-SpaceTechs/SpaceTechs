@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+    <h1>Members</h1>
+    <div class="panel">
+        <div class="panel__header">
+            <span>Member Roster</span>
+            <span>{{ members|length }} record{{ members|length|pluralize }}</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Join Date</th>
+                    <th>Active</th>
+                    <th>Major</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>{{ member.user.get_full_name|default:member.user.username }}</td>
+                    <td>{{ member.user.username }}</td>
+                    <td>{{ member.join_date }}</td>
+                    <td>{{ member.active_status|yesno:"Yes,No" }}</td>
+                    <td>{{ member.major|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No members yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

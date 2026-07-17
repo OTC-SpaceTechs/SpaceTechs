@@ -21,13 +21,14 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 
 ⚠️ **Do this before your first migration.** Swapping to a custom User model after you've already migrated is painful.
 
-- [ ] In `core/models.py`, create `class User(AbstractUser): pass` (add fields later as needed)
-- [ ] Set `AUTH_USER_MODEL = "core.User"` in `settings.py`
-- [ ] Run `makemigrations` / `migrate` — confirm it works before building anything else
-- [ ] Register `User` in `admin.py` so you can manage accounts from the Django admin immediately
-- [ ] Set up Django Groups for officer roles (Chair, Vice-Chair, Secretary, Treasurer, Directors of Projects, Director of Research, Director of Outreach, SEDS Rep, Member-at-Large)
+- [x] In `core/models.py`, create `class User(AbstractUser): pass` (add fields later as needed)
+- [x] Set `AUTH_USER_MODEL = "core.User"` in `settings.py`
+- [x] Run `makemigrations` / `migrate` — confirm it works before building anything else
+- [x] Register `User` in `admin.py` so you can manage accounts from the Django admin immediately
+- [x] Set up Django Groups for officer roles (Chair, Vice-Chair, Secretary, Treasurer, Directors of Projects, Director of Research, Director of Outreach, SEDS Rep, Member-at-Large)
   - Use **Groups**, not a hardcoded `role` field — your constitution explicitly allows officer positions to be added/removed over time
-- [ ] Decide now: will regular members log in at all, or is auth just for officers? (Affects Phase 2 scope)
+- [x] Decide now: will regular members log in at all, or is auth just for officers? (Affects Phase 2 scope)
+*Officers only*
 
 ---
 
@@ -38,8 +39,8 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 - [ ] `OfficerHistory` model — tracks who held what role and when:
   - `member` (FK), `role` (FK to Group or choice field), `start_date`, `end_date` (nullable)
   - This is what makes leadership transitions traceable later — directly supports the constitution's continuity language
-- [ ] Django admin registration for both
-- [ ] Basic member list view (even just admin-only at first)
+- [x] Django admin registration for both
+- [x] Basic member list view (even just admin-only at first)
 
 **Stop and test:** create a couple of fake members/officers in the admin panel and confirm relationships work before moving on.
 

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Space Techs{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <div class="layout">
+        <nav class="console">
+            <div class="console__brand">
+                <span class="console__brand-mark">&#9670;</span>
+                <span class="console__brand-text">Space<br>Techs</span>
+            </div>
+            <div class="console__status">
+                <span class="status-dot"></span>
+                <span>Systems Nominal</span>
+            </div>
+            <div class="console__nav">
+                <a href="{% url 'membership:member-list' %}"><span class="console__nav-index">01</span> Members</a>
+                <a href="{% url 'admin:index' %}"><span class="console__nav-index">02</span> Admin</a>
+            </div>
+        </nav>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
