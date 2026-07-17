@@ -8,10 +8,10 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 
 - [x] Create Django project
 - [x] Start `core` app
-- [ ] Install & configure Django REST Framework (`pip install djangorestframework`, add to `INSTALLED_APPS`)
-- [ ] Decide on database now (SQLite is fine for dev, but if you'll want full-text search later, set up **Postgres** early — switching later is a pain)
-- [ ] Set up `.env` handling (`django-environ` or `python-decouple`) for `SECRET_KEY`, DB creds, etc.
-- [ ] Initialize git repo + `.gitignore` if not already done
+- [x] Install & configure Django REST Framework (`pip install djangorestframework`, add to `INSTALLED_APPS`)
+- [x] Decide on database now (SQLite is fine for dev, but if you'll want full-text search later, set up **Postgres** early — switching later is a pain) — went with Postgres (local via Homebrew, `spacetechs` db)
+- [x] Set up `.env` handling (`django-environ` or `python-decouple`) for `SECRET_KEY`, DB creds, etc. — using `django-environ`
+- [x] Initialize git repo + `.gitignore` if not already done
 
 **Why first:** everything downstream (auth, permissions, API) assumes these choices are locked in.
 
