@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ event.title }}</h1>
+    <div class="panel">
+        <div class="panel__header">
+            <span>{{ event.get_event_type_display }}</span>
+            <span>{{ event.date|date:"M j, Y g:i A" }}</span>
+        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Location</th>
+                    <td>{{ event.location|default:"—" }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ event.description|default:"—"|linebreaksbr }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="{% url 'events:event-list' %}">&larr; Back to Events</a></p>
+{% endblock %}

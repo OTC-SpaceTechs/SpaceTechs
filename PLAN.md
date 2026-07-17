@@ -34,9 +34,9 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 
 ## Phase 2 — `membership` app
 
-- [ ] `Member` model — likely a `OneToOneField` to `User`, plus:
+- [x] `Member` model — likely a `OneToOneField` to `User`, plus:
   - `join_date`, `active_status`, `major` (optional), `bio` (optional)
-- [ ] `OfficerHistory` model — tracks who held what role and when:
+- [x] `OfficerHistory` model — tracks who held what role and when:
   - `member` (FK), `role` (FK to Group or choice field), `start_date`, `end_date` (nullable)
   - This is what makes leadership transitions traceable later — directly supports the constitution's continuity language
 - [x] Django admin registration for both
@@ -48,11 +48,11 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 
 ## Phase 3 — `events` app
 
-- [ ] `Event` model:
+- [x] `Event` model:
   - `title`, `date`, `event_type` (meeting / social / launch / fundraiser / workshop), `description`, `location` (optional)
-- [ ] Load in your Fall Semester Plans as seed data (management command or admin entry) — good way to test the model with real data
-- [ ] Public list/detail views (no auth needed — this is your public calendar)
-- [ ] DRF serializer + viewset for `Event` (your first real API endpoint — good warm-up before tackling `projects`)
+- [x] Load in your Fall Semester Plans as seed data (management command or admin entry) — good way to test the model with real data
+- [x] Public list/detail views (no auth needed — this is your public calendar)
+- [x] DRF serializer + viewset for `Event` (your first real API endpoint — good warm-up before tackling `projects`)
 
 **Why now:** simplest app, no complex relationships, good place to practice the model → admin → view → API pattern you'll repeat everywhere else.
 
