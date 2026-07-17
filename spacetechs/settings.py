@@ -80,6 +80,9 @@ DATABASES = {
     'default': env.db('DATABASE_URL'),
 }
 
+# User Model
+
+AUTH_USER_MODEL = "core.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
