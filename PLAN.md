@@ -68,16 +68,16 @@ Build this in sub-steps — don't try to do it all in one migration.
 - [x] **4d.** `LessonLearned` model — this is your weather-balloon-notes structure, formalized:
   - FK to `Project`, `question`, `answer`, `category` (e.g. "sealing," "payload," "FAA/comms"), optional `image` field
   - This turns scattered PDFs/notes into something searchable
-- [ ] Admin registration for all four, with inlines (e.g. show `LessonLearned` entries inline on the `Project` admin page)
-- [ ] DRF serializers/viewsets once models are stable
-- [ ] Decide: public read access to project docs, or member-only? (Probably member-only for raw docs, public for a project showcase page)
+- [x] Admin registration for all four, with inlines (e.g. show `LessonLearned` entries inline on the `Project` admin page)
+- [x] DRF serializers/viewsets once models are stable
+- [x] Decide: public read access to project docs, or member-only? — left public/read-only for now (matches `events`), same as everything else pre-Phase-4; revisit when the permission split is built
 
 ---
 
 ## Phase 5 — `inventory` app *(optional — fold into `projects` if you want to stay lean)*
 
-- [ ] `Equipment` model: `name`, `condition`, `custodian` (FK to Member, nullable), `checked_out_to_project` (FK, nullable), `acquisition_date`
-- [ ] Only build this as a separate app if equipment gets shared across multiple projects — otherwise `ComponentInventory` from Phase 4 covers it
+- [x] `Equipment` model: `name`, `condition`, `custodian` (FK to Member, nullable), `checked_out_to_project` (FK, nullable), `acquisition_date`
+- [x] Only build this as a separate app if equipment gets shared across multiple projects — otherwise `ComponentInventory` from Phase 4 covers it
 
 ---
 

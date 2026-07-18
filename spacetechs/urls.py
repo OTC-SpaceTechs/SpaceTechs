@@ -19,9 +19,14 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from events.views import EventViewSet
+from projects.views import ComponentViewSet, DocumentViewSet, ProjectViewSet, TipViewSet
 
 router = DefaultRouter()
 router.register(r'events', EventViewSet, basename='event')
+router.register(r'projects', ProjectViewSet, basename='project')
+router.register(r'documents', DocumentViewSet, basename='document')
+router.register(r'tips', TipViewSet, basename='tip')
+router.register(r'components', ComponentViewSet, basename='component')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

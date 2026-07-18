@@ -12,6 +12,9 @@ class Project(models.Model):
     status = models.CharField(max_length=20, choices=Status.choices)
     start_date = models.DateField(blank = True, null = True)
 
+    def __str__(self):
+        return self.name
+
 class ProjectContent(models.Model):
     project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="%(class)ss")
     title = models.CharField(max_length=255)
@@ -40,11 +43,5 @@ class Tip(ProjectContent):
     question = models.CharField(max_length=255)  # overrides/duplicates title's role slightly — see note below
     short_answer = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
-
-class Component(models.Model):
-    project = models.ForeignKey("Project", related_name='components')
-    quantity = models.PositiveIntegerField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
-    supplier = models.CharField(max_length=255)
-    notes = models.TextField()
+    category = models.CharField(max_length=100, blank=True)
 
