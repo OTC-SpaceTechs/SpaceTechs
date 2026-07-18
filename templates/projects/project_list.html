@@ -9,6 +9,7 @@
         <a class="btn btn--primary" href="{% url 'projects:project-create' %}">+ Add Project</a>
     </div>
     {% endif %}
+    {% include "_search_box.html" with search_placeholder="Search by project name or description" %}
     {% if projects %}
     <div class="cards">
         {% for project in projects %}
@@ -25,6 +26,6 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="panel"><div class="empty-state">No projects yet.</div></div>
+    <div class="panel"><div class="empty-state">{% if query %}No projects match "{{ query }}".{% else %}No projects yet.{% endif %}</div></div>
     {% endif %}
 {% endblock %}

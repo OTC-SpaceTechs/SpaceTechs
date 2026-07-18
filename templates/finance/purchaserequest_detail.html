@@ -32,7 +32,7 @@
             <dd>{% if purchase_request.requested_by %}{{ purchase_request.requested_by.user.get_full_name|default:purchase_request.requested_by.user.username }}{% else %}—{% endif %}</dd>
         </div>
         <div class="detail-grid__item">
-            <dt>Approved By</dt>
+            <dt>Reviewed By</dt>
             <dd>{% if purchase_request.approved_by %}{{ purchase_request.approved_by.user.get_full_name|default:purchase_request.approved_by.user.username }}{% else %}—{% endif %}</dd>
         </div>
         <div class="detail-grid__item">

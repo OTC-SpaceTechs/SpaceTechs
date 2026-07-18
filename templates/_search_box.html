@@ -1,0 +1,12 @@
+<form method="get" class="search-bar" role="search">
+    <input
+        type="search"
+        name="q"
+        value="{{ query }}"
+        class="text-input search-bar__input"
+        placeholder="{{ search_placeholder|default:'Search...' }}"
+        aria-label="{{ search_placeholder|default:'Search' }}"
+    >
+    <button type="submit" class="btn btn--primary">Search</button>
+    {% if query %}<a class="btn btn--ghost" href="{{ request.path }}">Clear</a>{% endif %}
+</form>

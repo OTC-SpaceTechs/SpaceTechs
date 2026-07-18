@@ -70,4 +70,18 @@
             </tbody>
         </table>
     </div>
+
+    <div class="section-heading">
+        <h2>Latest News</h2>
+        <a href="{% url 'events:article-list' %}">All Articles &rarr;</a>
+    </div>
+    {% if recent_articles %}
+    <div class="cards">
+        {% for article in recent_articles %}
+        {% include "events/_article_card.html" %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No articles published yet.</div></div>
+    {% endif %}
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView
@@ -11,8 +12,17 @@ from .models import Equipment
 
 @officer_required
 def equipment_list(request):
+    query = request.GET.get('q', '').strip()
     equipment = Equipment.objects.select_related('custodian__user', 'checked_out_to_project').order_by('name')
-    return render(request, 'inventory/equipment_list.html', {'equipment': equipment})
+    if query:
+        equipment = equipment.filter(
+            Q(name__icontains=query)
+            | Q(supplier__icontains=query)
+            | Q(notes__icontains=query)
+            | Q(custodian__user__first_name__icontains=query)
+            | Q(custodian__user__last_name__icontains=query)
+        )
+    return render(request, 'inventory/equipment_list.html', {'equipment': equipment, 'query': query})
 
 
 @officer_required

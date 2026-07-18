@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Events{% endblock %}
+{% block title %}All Events{% endblock %}
 
 {% block content %}
-    <h1>Events</h1>
+    <h1>All Events</h1>
     {% if is_officer %}
     <div class="actions-row">
         <a class="btn btn--primary" href="{% url 'events:event-create' %}">+ Add Event</a>
     </div>
     {% endif %}
+    {% include "_search_box.html" with search_placeholder="Search by title, location, or description" %}
     <div class="panel">
         <div class="panel__header">
             <span>Upcoming &amp; Past Events</span>
@@ -33,10 +34,11 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">No events yet.</td>
+                    <td colspan="4">{% if query %}No events match "{{ query }}".{% else %}No events yet.{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <a class="back-link" href="{% url 'events:event-list' %}">&larr; Back to Calendar</a>
 {% endblock %}

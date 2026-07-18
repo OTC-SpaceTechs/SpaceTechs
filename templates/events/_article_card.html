@@ -1,0 +1,10 @@
+<a class="card" href="{% url 'events:article-detail' article.pk %}">
+    {% if article.image %}<img class="card__image" src="{{ article.image.url }}" alt="">{% endif %}
+    <div class="card__header">
+        <h3 class="card__title">{{ article.title }}</h3>
+    </div>
+    <p class="card__desc">{{ article.summary|default:article.body }}</p>
+    <div class="card__footer">
+        {{ article.published_at|date:"M j, Y" }}{% if article.author %} by {{ article.author.user.get_full_name|default:article.author.user.username }}{% endif %}
+    </div>
+</a>

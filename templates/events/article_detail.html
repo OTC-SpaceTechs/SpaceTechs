@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load events_extras %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'events:article-update' article.pk %}">Edit</a>
+        <a class="btn btn--danger" href="{% url 'events:article-delete' article.pk %}">Delete</a>
+    </div>
+    {% endif %}
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Published</dt>
+            <dd>{{ article.published_at|date:"M j, Y g:i A" }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Author</dt>
+            <dd>{% if article.author %}{{ article.author.user.get_full_name|default:article.author.user.username }}{% else %}—{% endif %}</dd>
+        </div>
+    </div>
+
+    {% if article.image %}
+    <img class="article-cover" src="{{ article.image.url }}" alt="">
+    {% endif %}
+
+    <div class="panel">
+        <div class="detail-grid__item article-body">{{ article.body|markdownify }}</div>
+    </div>
+
+    <a class="back-link" href="{% url 'events:article-list' %}">&larr; Back to Articles</a>
+{% endblock %}

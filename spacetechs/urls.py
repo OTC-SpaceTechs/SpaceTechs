@@ -23,11 +23,12 @@ from rest_framework.routers import DefaultRouter
 
 from core.views import home, portal_home, portal_search
 
-from events.views import EventViewSet
+from events.views import ArticleViewSet, EventViewSet
 from projects.views import DocumentViewSet, ProjectViewSet, TipViewSet
 
 router = DefaultRouter()
 router.register(r'events', EventViewSet, basename='event')
+router.register(r'articles', ArticleViewSet, basename='article')
 router.register(r'projects', ProjectViewSet, basename='project')
 router.register(r'documents', DocumentViewSet, basename='document')
 router.register(r'tips', TipViewSet, basename='tip')

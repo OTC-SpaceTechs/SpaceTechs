@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
@@ -11,8 +12,16 @@ from .models import Member, OfficerHistory
 
 @officer_required
 def member_list(request):
+    query = request.GET.get('q', '').strip()
     members = Member.objects.select_related('user').order_by('user__last_name', 'user__first_name')
-    return render(request, 'membership/member_list.html', {'members': members})
+    if query:
+        members = members.filter(
+            Q(user__first_name__icontains=query)
+            | Q(user__last_name__icontains=query)
+            | Q(user__username__icontains=query)
+            | Q(major__icontains=query)
+        )
+    return render(request, 'membership/member_list.html', {'members': members, 'query': query})
 
 
 class MemberDetailView(OfficerRequiredMixin, DetailView):

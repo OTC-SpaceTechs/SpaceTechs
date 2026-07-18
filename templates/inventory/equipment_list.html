@@ -7,6 +7,7 @@
     <div class="actions-row">
         <a class="btn btn--primary" href="{% url 'portal:inventory:equipment-create' %}">+ Add Equipment</a>
     </div>
+    {% include "_search_box.html" with search_placeholder="Search by name, supplier, notes, or custodian" %}
     <div class="panel">
         <div class="panel__header">
             <span>Equipment</span>
@@ -37,7 +38,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5">No equipment recorded yet.</td>
+                    <td colspan="5">{% if query %}No equipment matches "{{ query }}".{% else %}No equipment recorded yet.{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>

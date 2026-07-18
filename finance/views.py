@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -12,7 +13,24 @@ from .models import PurchaseRequest
 class PurchaseRequestListView(FinanceOfficerRequiredMixin, ListView):
     template_name = 'finance/purchaserequest_list.html'
     context_object_name = 'purchase_requests'
-    queryset = PurchaseRequest.objects.select_related('project', 'requested_by__user', 'approved_by__user').order_by('-created_at')
+
+    def get_queryset(self):
+        queryset = PurchaseRequest.objects.select_related('project', 'requested_by__user', 'approved_by__user').order_by('-created_at')
+        query = self.request.GET.get('q', '').strip()
+        if query:
+            queryset = queryset.filter(
+                Q(purpose__icontains=query)
+                | Q(project__name__icontains=query)
+                | Q(requested_by__user__first_name__icontains=query)
+                | Q(requested_by__user__last_name__icontains=query)
+                | Q(requested_by__user__username__icontains=query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '').strip()
+        return context
 
 
 class PurchaseRequestDetailView(FinanceOfficerRequiredMixin, DetailView):

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Articles{% endblock %}
+
+{% block content %}
+    <h1>Articles</h1>
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--primary" href="{% url 'events:article-create' %}">+ Write Article</a>
+    </div>
+    {% endif %}
+    {% include "_search_box.html" with search_placeholder="Search by title or content" %}
+
+    {% if page_obj.object_list %}
+    <div class="cards">
+        {% for article in page_obj %}
+        {% include "events/_article_card.html" %}
+        {% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}
+    <div class="actions-row">
+        {% if page_obj.has_previous %}
+        <a class="btn btn--ghost btn--small" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">&larr; Newer</a>
+        {% endif %}
+        <span class="card__footer">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a class="btn btn--ghost btn--small" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">Older &rarr;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel"><div class="empty-state">{% if query %}No articles match "{{ query }}".{% else %}No articles published yet.{% endif %}</div></div>
+    {% endif %}
+
+    <a class="back-link" href="{% url 'events:event-list' %}">&larr; Back to Events</a>
+{% endblock %}

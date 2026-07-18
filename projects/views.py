@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView
@@ -12,8 +13,11 @@ from .serializers import DocumentSerializer, ProjectSerializer, TipSerializer
 
 
 def project_list(request):
+    query = request.GET.get('q', '').strip()
     projects = Project.objects.all().order_by('-start_date')
-    return render(request, 'projects/project_list.html', {'projects': projects})
+    if query:
+        projects = projects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    return render(request, 'projects/project_list.html', {'projects': projects, 'query': query})
 
 
 def project_detail(request, pk):

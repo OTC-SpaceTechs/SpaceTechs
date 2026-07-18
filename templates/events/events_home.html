@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+    <h1>Events</h1>
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--primary" href="{% url 'events:event-create' %}">+ Add Event</a>
+        <a class="btn btn--ghost" href="{% url 'events:article-create' %}">+ Write Article</a>
+    </div>
+    {% endif %}
+
+    <div class="section-heading">
+        <h2>Calendar</h2>
+        <a href="{% url 'events:event-table' %}">List View &rarr;</a>
+    </div>
+
+    <div class="calendar__nav">
+        <a class="btn btn--ghost btn--small" href="?year={{ prev_year }}&month={{ prev_month }}">&larr; Prev</a>
+        <h2>{{ month_label }}</h2>
+        <a class="btn btn--ghost btn--small" href="?year={{ next_year }}&month={{ next_month }}">Next &rarr;</a>
+    </div>
+
+    <div class="calendar__grid">
+        <div class="calendar__weekday">Sun</div>
+        <div class="calendar__weekday">Mon</div>
+        <div class="calendar__weekday">Tue</div>
+        <div class="calendar__weekday">Wed</div>
+        <div class="calendar__weekday">Thu</div>
+        <div class="calendar__weekday">Fri</div>
+        <div class="calendar__weekday">Sat</div>
+        {% for week in weeks %}
+            {% for cell in week %}
+            <div class="calendar__cell{% if not cell.in_month %} is-outside{% endif %}{% if cell.is_today %} is-today{% endif %}">
+                <div class="calendar__date">{{ cell.date.day }}</div>
+                {% for event in cell.events %}
+                <a class="calendar__event" href="{% url 'events:event-detail' event.pk %}" title="{{ event.title }}">{{ event.title }}</a>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="section-heading">
+        <h2>News</h2>
+        <a href="{% url 'events:article-list' %}">All Articles &rarr;</a>
+    </div>
+    {% if articles %}
+    <div class="cards">
+        {% for article in articles %}
+        {% include "events/_article_card.html" %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No articles published yet.</div></div>
+    {% endif %}
+{% endblock %}
