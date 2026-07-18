@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ project.name }}</h1>
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Status</dt>
+            <dd><span class="badge badge--{{ project.status|lower }}">{{ project.get_status_display }}</span></dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Start Date</dt>
+            <dd>{{ project.start_date|date:"M j, Y"|default:"—" }}</dd>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel__header"><span>Overview</span></div>
+        <div class="detail-grid__item">{{ project.description|linebreaksbr }}</div>
+    </div>
+
+    <div class="section-heading">
+        <h2>Documents</h2>
+    </div>
+    {% if project.documents.all %}
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Added</th>
+                    <th>File</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in project.documents.all %}
+                <tr>
+                    <td>{{ doc.title }}</td>
+                    <td><span class="badge badge--neutral">{{ doc.get_doc_type_display }}</span></td>
+                    <td>{{ doc.created_at|date:"M j, Y" }}</td>
+                    <td>{% if doc.file %}<a href="{{ doc.file.url }}">Download</a>{% else %}—{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No documents uploaded yet.</div></div>
+    {% endif %}
+
+    <div class="section-heading">
+        <h2>Lessons Learned</h2>
+    </div>
+    {% if project.tips.all %}
+    <div class="cards">
+        {% for tip in project.tips.all %}
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title">{{ tip.question }}</h3>
+                {% if tip.category %}<span class="badge badge--neutral">{{ tip.category }}</span>{% endif %}
+            </div>
+            <p class="card__desc">{{ tip.short_answer }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No lessons learned logged yet.</div></div>
+    {% endif %}
+
+    <div class="section-heading">
+        <h2>Equipment Checked Out</h2>
+    </div>
+    {% if project.equipment_checked_out.all %}
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Custodian</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in project.equipment_checked_out.all %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{% if item.custodian %}{{ item.custodian.user.get_full_name|default:item.custodian.user.username }}{% else %}—{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No equipment currently checked out to this project.</div></div>
+    {% endif %}
+
+    <a class="back-link" href="{% url 'projects:project-list' %}">&larr; Back to Projects</a>
+{% endblock %}

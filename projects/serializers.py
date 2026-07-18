@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Component, Document, Project, Tip
+from .models import Document, Project, Tip
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -15,17 +15,9 @@ class TipSerializer(serializers.ModelSerializer):
         fields = ['id', 'project', 'title', 'image', 'created_at', 'question', 'short_answer', 'content', 'category']
 
 
-class ComponentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Component
-        fields = ['id', 'project', 'name', 'quantity', 'cost', 'supplier', 'notes']
-
-
 class ProjectSerializer(serializers.ModelSerializer):
-    documents = DocumentSerializer(many=True, read_only=True)
-    tips = TipSerializer(many=True, read_only=True)
-    components = ComponentSerializer(many=True, read_only=True)
+    """Public showcase representation — full docs/tips live behind their own officer-only endpoints."""
 
     class Meta:
         model = Project
-        fields = ['id', 'name', 'description', 'status', 'start_date', 'documents', 'tips', 'components']
+        fields = ['id', 'name', 'description', 'status', 'start_date']

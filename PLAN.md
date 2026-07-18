@@ -83,17 +83,17 @@ Build this in sub-steps — don't try to do it all in one migration.
 
 ## Phase 6 — `finance` app *(officer-only)*
 
-- [ ] `PurchaseRequest` model: `requested_by` (FK), `amount`, `purpose`, `status` (pending/approved/denied), `project` (FK, optional), `approved_by` (FK, nullable)
-- [ ] Restrict all views to Treasurer/Chair/Vice-Chair groups from Phase 1
-- [ ] This can stay admin-only (no custom frontend needed) for a long time — low priority to build custom views here
+- [x] `PurchaseRequest` model: `requested_by` (FK), `amount`, `purpose`, `status` (pending/approved/denied), `project` (FK, optional), `approved_by` (FK, nullable)
+- [x] Restrict all views to Treasurer/Chair/Vice-Chair groups from Phase 1
+- [x] This can stay admin-only (no custom frontend needed) for a long time — low priority to build custom views here
 
 ---
 
 ## Phase 7 — `outreach` app
 
-- [ ] `Speaker` / `Event` tie-in (could reuse `events` with a `guest_speaker` field instead of a new model — evaluate before building)
-- [ ] `Opportunity` model: `name`, `type` (conference/grant/sponsorship/scholarship), `deadline`, `status`, `notes`
-- [ ] Lowest priority — build only once core/membership/projects/events are solid
+- [x] `Speaker` / `Event` tie-in (could reuse `events` with a `guest_speaker` field instead of a new model — evaluate before building)
+- [x] `Opportunity` model: `name`, `type` (conference/grant/sponsorship/scholarship), `deadline`, `status`, `notes`
+- [x] Lowest priority — build only once core/membership/projects/events are solid
 
 ---
 

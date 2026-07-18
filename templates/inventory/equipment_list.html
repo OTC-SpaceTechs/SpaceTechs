@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+    <h1>Inventory</h1>
+    <div class="panel">
+        <div class="panel__header">
+            <span>Equipment</span>
+            <span>{{ equipment|length }} record{{ equipment|length|pluralize }}</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Supplier</th>
+                    <th>Custodian</th>
+                    <th>Checked Out To</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in equipment %}
+                <tr>
+                    <td><a href="{% url 'inventory:equipment-detail' item.pk %}">{{ item.name }}</a></td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.supplier|default:"—" }}</td>
+                    <td>{% if item.custodian %}{{ item.custodian.user.get_full_name|default:item.custodian.user.username }}{% else %}—{% endif %}</td>
+                    <td>
+                        {% if item.checked_out_to_project %}
+                        <a href="{% url 'projects:project-detail' item.checked_out_to_project.pk %}">{{ item.checked_out_to_project.name }}</a>
+                        {% else %}—{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No equipment recorded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

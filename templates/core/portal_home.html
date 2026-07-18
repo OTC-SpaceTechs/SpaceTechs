@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Officer Portal{% endblock %}
+
+{% block content %}
+    <h1>Officer Portal</h1>
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Active Members</dt>
+            <dd>{{ member_count }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Equipment Records</dt>
+            <dd>{{ equipment_count }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Pending Purchase Requests</dt>
+            <dd>{{ pending_purchase_requests }}</dd>
+        </div>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title"><a href="{% url 'membership:member-list' %}">Members</a></h3>
+            </div>
+            <p class="card__desc">Roster, join dates, and officer history.</p>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title"><a href="{% url 'inventory:equipment-list' %}">Inventory</a></h3>
+            </div>
+            <p class="card__desc">Equipment tracking, custodians, and project checkouts.</p>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title"><a href="{% url 'portal:search' %}">Search Documents &amp; Lessons Learned</a></h3>
+            </div>
+            <p class="card__desc">Full-text search across project documentation.</p>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title"><a href="{% url 'admin:finance_purchaserequest_changelist' %}">Finance</a></h3>
+            </div>
+            <p class="card__desc">Purchase requests (managed in Django admin).</p>
+        </div>
+    </div>
+{% endblock %}

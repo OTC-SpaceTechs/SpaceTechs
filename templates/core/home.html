@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Space Techs{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero__eyebrow">Student Aerospace Organization</div>
+        <h1>Space Techs</h1>
+        <p>
+            We're a student-run club building real hardware — high-altitude balloons, rocketry,
+            and experimental payloads — while documenting what we learn along the way. Browse
+            our active projects and see what's coming up next.
+        </p>
+        <div class="hero__actions">
+            <a class="btn btn--primary" href="{% url 'projects:project-list' %}">View Projects</a>
+            <a class="btn btn--ghost" href="{% url 'events:event-list' %}">Upcoming Events</a>
+        </div>
+    </section>
+
+    <div class="section-heading">
+        <h2>Active Projects</h2>
+        <a href="{% url 'projects:project-list' %}">All Projects &rarr;</a>
+    </div>
+    {% if active_projects %}
+    <div class="cards">
+        {% for project in active_projects %}
+        <div class="card">
+            <div class="card__header">
+                <h3 class="card__title"><a href="{% url 'projects:project-detail' project.pk %}">{{ project.name }}</a></h3>
+                <span class="badge badge--active">{{ project.get_status_display }}</span>
+            </div>
+            <p class="card__desc">{{ project.description }}</p>
+            {% if project.start_date %}
+            <div class="card__footer">Started {{ project.start_date|date:"M Y" }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No active projects right now.</div></div>
+    {% endif %}
+
+    <div class="section-heading">
+        <h2>Upcoming Events</h2>
+        <a href="{% url 'events:event-list' %}">All Events &rarr;</a>
+    </div>
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in upcoming_events %}
+                <tr>
+                    <td>{{ event.date|date:"M j, Y g:i A" }}</td>
+                    <td><a href="{% url 'events:event-detail' event.pk %}">{{ event.title }}</a></td>
+                    <td>{{ event.get_event_type_display }}</td>
+                    <td>{{ event.location|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No upcoming events scheduled.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <h1>Search Documents &amp; Lessons Learned</h1>
+
+    <div class="panel" style="margin-bottom: 1.5rem;">
+        <div class="detail-grid__item">
+            <form method="get" action="{% url 'portal:search' %}">
+                <label for="id_q">Query</label><br>
+                <input type="text" name="q" id="id_q" value="{{ query }}" class="text-input" placeholder="e.g. sealing, payload, FAA" autofocus>
+                <br>
+                <button type="submit" class="btn btn--primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+        <div class="section-heading">
+            <h2>Documents</h2>
+        </div>
+        {% if documents %}
+        <div class="panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Project</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in documents %}
+                    <tr>
+                        <td>{{ doc.title }}</td>
+                        <td><a href="{% url 'projects:project-detail' doc.project.pk %}">{{ doc.project.name }}</a></td>
+                        <td><span class="badge badge--neutral">{{ doc.get_doc_type_display }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="panel"><div class="empty-state">No matching documents.</div></div>
+        {% endif %}
+
+        <div class="section-heading">
+            <h2>Lessons Learned</h2>
+        </div>
+        {% if tips %}
+        <div class="cards">
+            {% for tip in tips %}
+            <div class="card">
+                <div class="card__header">
+                    <h3 class="card__title"><a href="{% url 'projects:project-detail' tip.project.pk %}">{{ tip.question }}</a></h3>
+                    {% if tip.category %}<span class="badge badge--neutral">{{ tip.category }}</span>{% endif %}
+                </div>
+                <p class="card__desc">{{ tip.short_answer }}</p>
+                <div class="card__footer">{{ tip.project.name }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="panel"><div class="empty-state">No matching lessons learned.</div></div>
+        {% endif %}
+    {% else %}
+        <div class="panel"><div class="empty-state">Enter a search term above.</div></div>
+    {% endif %}
+
+    <a class="back-link" href="{% url 'portal:home' %}">&larr; Back to Portal</a>
+{% endblock %}

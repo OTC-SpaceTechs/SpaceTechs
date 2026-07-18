@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ item.name }}</h1>
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Quantity</dt>
+            <dd>{{ item.quantity }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Cost</dt>
+            <dd>${{ item.cost }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Supplier</dt>
+            <dd>{{ item.supplier|default:"—" }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Custodian</dt>
+            <dd>{% if item.custodian %}{{ item.custodian.user.get_full_name|default:item.custodian.user.username }}{% else %}Unassigned{% endif %}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Checked Out To</dt>
+            <dd>
+                {% if item.checked_out_to_project %}
+                <a href="{% url 'projects:project-detail' item.checked_out_to_project.pk %}">{{ item.checked_out_to_project.name }}</a>
+                {% else %}—{% endif %}
+            </dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Approved By</dt>
+            <dd>{% if item.approved_by %}{{ item.approved_by.user.get_full_name|default:item.approved_by.user.username }}{% else %}—{% endif %}</dd>
+        </div>
+    </div>
+
+    {% if item.description or item.notes %}
+    <div class="panel">
+        <div class="panel__header"><span>Notes</span></div>
+        <div class="detail-grid__item">
+            {% if item.description %}{{ item.description|linebreaksbr }}{% endif %}
+            {% if item.description and item.notes %}<br><br>{% endif %}
+            {% if item.notes %}{{ item.notes|linebreaksbr }}{% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <a class="back-link" href="{% url 'inventory:equipment-list' %}">&larr; Back to Inventory</a>
+{% endblock %}

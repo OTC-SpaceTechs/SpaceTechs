@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'events',
     'projects',
     'inventory',
+    'finance',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.officer_context',
             ],
         },
     },
@@ -87,6 +89,12 @@ DATABASES = {
 # User Model
 
 AUTH_USER_MODEL = "core.User"
+
+# Auth
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'portal:home'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
