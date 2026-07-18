@@ -5,6 +5,13 @@
 {% block content %}
     <h1>{{ project.name }}</h1>
 
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'projects:project-update' project.pk %}">Edit Project</a>
+        <a class="btn btn--danger" href="{% url 'projects:project-delete' project.pk %}">Delete Project</a>
+    </div>
+    {% endif %}
+
     <div class="detail-grid">
         <div class="detail-grid__item">
             <dt>Status</dt>
@@ -21,8 +28,14 @@
         <div class="detail-grid__item">{{ project.description|linebreaksbr }}</div>
     </div>
 
+    {% if is_officer %}
     <div class="section-heading">
-        <h2>Documents</h2>
+        <h2>Project Content</h2>
+    </div>
+
+    <div class="section-heading section-heading--sub">
+        <h3>Documents</h3>
+        <a href="{% url 'projects:document-create' project.pk %}">+ Add Document</a>
     </div>
     {% if project.documents.all %}
     <div class="panel">
@@ -33,6 +46,7 @@
                     <th>Type</th>
                     <th>Added</th>
                     <th>File</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +56,10 @@
                     <td><span class="badge badge--neutral">{{ doc.get_doc_type_display }}</span></td>
                     <td>{{ doc.created_at|date:"M j, Y" }}</td>
                     <td>{% if doc.file %}<a href="{{ doc.file.url }}">Download</a>{% else %}—{% endif %}</td>
+                    <td>
+                        <a class="btn btn--ghost btn--small" href="{% url 'projects:document-update' doc.pk %}">Edit</a>
+                        <a class="btn btn--danger btn--small" href="{% url 'projects:document-delete' doc.pk %}">Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -51,8 +69,9 @@
     <div class="panel"><div class="empty-state">No documents uploaded yet.</div></div>
     {% endif %}
 
-    <div class="section-heading">
-        <h2>Lessons Learned</h2>
+    <div class="section-heading section-heading--sub">
+        <h3>Tips</h3>
+        <a href="{% url 'projects:tip-create' project.pk %}">+ Add Tip</a>
     </div>
     {% if project.tips.all %}
     <div class="cards">
@@ -63,11 +82,15 @@
                 {% if tip.category %}<span class="badge badge--neutral">{{ tip.category }}</span>{% endif %}
             </div>
             <p class="card__desc">{{ tip.short_answer }}</p>
+            <div class="card__footer">
+                <a class="btn btn--ghost btn--small" href="{% url 'projects:tip-update' tip.pk %}">Edit</a>
+                <a class="btn btn--danger btn--small" href="{% url 'projects:tip-delete' tip.pk %}">Delete</a>
+            </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <div class="panel"><div class="empty-state">No lessons learned logged yet.</div></div>
+    <div class="panel"><div class="empty-state">No tips logged yet.</div></div>
     {% endif %}
 
     <div class="section-heading">
@@ -96,6 +119,18 @@
     </div>
     {% else %}
     <div class="panel"><div class="empty-state">No equipment currently checked out to this project.</div></div>
+    {% endif %}
+    {% else %}
+    <div class="section-heading">
+        <h2>Project Content</h2>
+    </div>
+    <div class="panel">
+        <div class="empty-state">
+            Documents, tips, and equipment records for this project are available to club officers.
+            <br><br>
+            <a class="btn btn--ghost" href="{% url 'login' %}?next={{ request.path }}">Officer Login</a>
+        </div>
+    </div>
     {% endif %}
 
     <a class="back-link" href="{% url 'projects:project-list' %}">&larr; Back to Projects</a>

@@ -4,6 +4,11 @@
 
 {% block content %}
     <h1>Events</h1>
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--primary" href="{% url 'events:event-create' %}">+ Add Event</a>
+    </div>
+    {% endif %}
     <div class="panel">
         <div class="panel__header">
             <span>Upcoming &amp; Past Events</span>

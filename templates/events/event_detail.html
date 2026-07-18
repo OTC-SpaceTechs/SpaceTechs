@@ -4,6 +4,12 @@
 
 {% block content %}
     <h1>{{ event.title }}</h1>
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'events:event-update' event.pk %}">Edit</a>
+        <a class="btn btn--danger" href="{% url 'events:event-delete' event.pk %}">Delete</a>
+    </div>
+    {% endif %}
     <div class="panel">
         <div class="panel__header">
             <span>{{ event.get_event_type_display }}</span>

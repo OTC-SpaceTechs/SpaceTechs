@@ -7,9 +7,9 @@
         <div class="hero__eyebrow">Student Aerospace Organization</div>
         <h1>Space Techs</h1>
         <p>
-            We're a student-run club building real hardware — high-altitude balloons, rocketry,
-            and experimental payloads — while documenting what we learn along the way. Browse
-            our active projects and see what's coming up next.
+            We're a student-run club building real hardware, from high-altitude balloons and
+            rocketry to experimental payloads, and documenting what we learn along the way.
+            Browse our active projects and see what's coming up next.
         </p>
         <div class="hero__actions">
             <a class="btn btn--primary" href="{% url 'projects:project-list' %}">View Projects</a>
@@ -24,16 +24,16 @@
     {% if active_projects %}
     <div class="cards">
         {% for project in active_projects %}
-        <div class="card">
+        <a class="card" href="{% url 'projects:project-detail' project.pk %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'projects:project-detail' project.pk %}">{{ project.name }}</a></h3>
+                <h3 class="card__title">{{ project.name }}</h3>
                 <span class="badge badge--active">{{ project.get_status_display }}</span>
             </div>
             <p class="card__desc">{{ project.description }}</p>
             {% if project.start_date %}
             <div class="card__footer">Started {{ project.start_date|date:"M Y" }}</div>
             {% endif %}
-        </div>
+        </a>
         {% endfor %}
     </div>
     {% else %}

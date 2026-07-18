@@ -27,6 +27,8 @@ def portal_home(request):
         'member_count': Member.objects.filter(active_status=True).count(),
         'equipment_count': Equipment.objects.count(),
         'pending_purchase_requests': PurchaseRequest.objects.filter(status='PENDING').count(),
+        'project_count': Project.objects.count(),
+        'upcoming_event_count': Event.objects.filter(date__gte=timezone.now()).count(),
     }
     return render(request, 'core/portal_home.html', context)
 

@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: spacetechs
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn spacetechs.wsgi"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: spacetechs-db
+          property: connectionString
+      # ALLOWED_HOSTS isn't strictly needed here since RENDER_EXTERNAL_HOSTNAME
+      # is auto-injected by Render and settings.py adds it automatically. Set
+      # this only if serving a custom domain too, e.g. "spacetechs.org".
+      - key: ALLOWED_HOSTS
+        value: ""
+
+databases:
+  - name: spacetechs-db
+    plan: free

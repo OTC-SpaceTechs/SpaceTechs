@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>Inventory</h1>
+    <div class="actions-row">
+        <a class="btn btn--primary" href="{% url 'portal:inventory:equipment-create' %}">+ Add Equipment</a>
+    </div>
     <div class="panel">
         <div class="panel__header">
             <span>Equipment</span>
@@ -22,7 +25,7 @@
             <tbody>
                 {% for item in equipment %}
                 <tr>
-                    <td><a href="{% url 'inventory:equipment-detail' item.pk %}">{{ item.name }}</a></td>
+                    <td><a href="{% url 'portal:inventory:equipment-detail' item.pk %}">{{ item.name }}</a></td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.supplier|default:"—" }}</td>
                     <td>{% if item.custodian %}{{ item.custodian.user.get_full_name|default:item.custodian.user.username }}{% else %}—{% endif %}</td>

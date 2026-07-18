@@ -99,20 +99,23 @@ Build this in sub-steps — don't try to do it all in one migration.
 
 ## Phase 8 — Permissions & Public/Private Split
 
-- [ ] Map out URL structure now that models exist:
+- [x] Map out URL structure now that models exist:
   - `/` — public site (events, project showcase, about)
-  - `/portal/` or `/members/` — auth-required (full project docs, inventory, finance)
-- [ ] Use DRF permission classes (`IsAuthenticated`, custom `IsOfficer`) rather than checking groups manually in every view
-- [ ] Test as a "regular member" account AND an "officer" account to confirm the split actually works
+  - `/portal/`, auth-required (full project docs, members, inventory); finance stays admin-only
+- [x] Use DRF permission classes (`IsAuthenticated`, custom `IsOfficer`) rather than checking groups manually in every view
+  - `IsOfficer` (core/permissions.py) checks Group membership against the Phase 1 officer groups, not `is_staff`, so it stays distinct from Django admin access
+  - Real login/logout added at `/accounts/` (`django.contrib.auth.urls`); `/portal/` and `/projects/<id>/`'s full documentation section both gate on it
+- [x] Test as a "regular member" account AND an "officer" account to confirm the split actually works
+  - Per Phase 1, regular members don't get logins, so this was verified instead with an authenticated-but-non-officer account (403 on portal), an officer account (200), and an anonymous request (302 to login)
 
 ---
 
 ## Phase 9 — Polish
 
-- [ ] Full-text search on `LessonLearned` / `Document` (Postgres `SearchVector` if you set up Postgres in Phase 0)
-- [ ] Seed data / fixtures for demo purposes
-- [ ] API docs (drf-spectacular or similar) if others will consume the API
-- [ ] Deployment prep (env vars, static files, `ALLOWED_HOSTS`, etc.)
+- [x] Full-text search on `LessonLearned` / `Document` (Postgres `SearchVector` if you set up Postgres in Phase 0), now live at `/portal/search/`
+- [x] Seed data / fixtures for demo purposes: `python manage.py seed_demo` loads `core/fixtures/demo.json`. Mechanism is built, no demo content populated yet
+- [x] API docs (drf-spectacular or similar) if others will consume the API, now live at `/api/docs/` (Swagger), `/api/redoc/`, and `/api/schema/`
+- [x] Deployment prep (env vars, static files, `ALLOWED_HOSTS`, etc.): gunicorn plus WhiteNoise, production security settings gated on `DEBUG=False`, and `Procfile` plus `render.yaml` for a Render-style PaaS deploy
 
 ---
 

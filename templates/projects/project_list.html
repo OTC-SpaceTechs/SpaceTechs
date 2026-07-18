@@ -4,19 +4,24 @@
 
 {% block content %}
     <h1>Projects</h1>
+    {% if is_officer %}
+    <div class="actions-row">
+        <a class="btn btn--primary" href="{% url 'projects:project-create' %}">+ Add Project</a>
+    </div>
+    {% endif %}
     {% if projects %}
     <div class="cards">
         {% for project in projects %}
-        <div class="card">
+        <a class="card" href="{% url 'projects:project-detail' project.pk %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'projects:project-detail' project.pk %}">{{ project.name }}</a></h3>
+                <h3 class="card__title">{{ project.name }}</h3>
                 <span class="badge badge--{{ project.status|lower }}">{{ project.get_status_display }}</span>
             </div>
             <p class="card__desc">{{ project.description }}</p>
             {% if project.start_date %}
             <div class="card__footer">Started {{ project.start_date|date:"M Y" }}</div>
             {% endif %}
-        </div>
+        </a>
         {% endfor %}
     </div>
     {% else %}

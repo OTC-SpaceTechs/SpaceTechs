@@ -16,7 +16,7 @@ class TipSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    """Public showcase representation — full docs/tips live behind their own officer-only endpoints."""
+    """Public showcase representation. Full docs and tips live behind their own officer-only endpoints."""
 
     class Meta:
         model = Project

@@ -14,8 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 
 from core.views import home, portal_home, portal_search
@@ -29,13 +32,13 @@ router.register(r'projects', ProjectViewSet, basename='project')
 router.register(r'documents', DocumentViewSet, basename='document')
 router.register(r'tips', TipViewSet, basename='tip')
 
-# Officer-only portal: member roster, inventory, and cross-project search.
-# Finance stays admin-only (see finance/admin.py) rather than getting its own portal page.
+# Officer-only portal: member roster, inventory, finance, and cross-project search.
 portal_patterns = [
     path('', portal_home, name='home'),
     path('search/', portal_search, name='search'),
     path('members/', include('membership.urls')),
     path('inventory/', include('inventory.urls')),
+    path('finance/', include('finance.urls')),
 ]
 
 urlpatterns = [
@@ -46,4 +49,14 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('projects/', include('projects.urls')),
     path('api/', include(router.urls)),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+
+if settings.DEBUG:
+    # Local dev only. WhiteNoise serves STATIC_URL but not MEDIA_URL, and
+    # production PaaS deploys should point MEDIA at object storage (e.g.
+    # django-storages plus an S3-compatible bucket) since PaaS filesystems
+    # are ephemeral and uploaded files won't survive a redeploy otherwise.
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

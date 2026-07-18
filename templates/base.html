@@ -33,9 +33,6 @@
                 {% if is_officer %}
                 <a href="{% url 'portal:home' %}" class="{% if 'portal' in request.resolver_match.namespaces %}is-active{% endif %}"><span class="console__nav-index">03</span> Portal</a>
                 {% endif %}
-                {% if request.user.is_staff %}
-                <a href="{% url 'admin:index' %}"><span class="console__nav-index">04</span> Admin</a>
-                {% endif %}
             </div>
             <div class="console__auth">
                 {% if request.user.is_authenticated %}

@@ -362,6 +362,8 @@ tr:hover td {
     padding: 1.1rem 1.2rem;
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.4);
     transition: border-color 0.15s ease, transform 0.15s ease;
+    color: var(--mc-text);
+    text-decoration: none;
 }
 
 .card:hover {
@@ -382,10 +384,6 @@ tr:hover td {
     letter-spacing: 0.02em;
     color: var(--mc-cyan-bright);
     margin: 0;
-}
-
-.card__title a {
-    color: inherit;
 }
 
 .card__meta {
@@ -410,6 +408,7 @@ tr:hover td {
     margin-top: auto;
     font-family: var(--mc-mono);
     font-size: 0.72rem;
+    color: var(--mc-text);
 }
 
 /* Section headings between panels */
@@ -427,6 +426,19 @@ tr:hover td {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--mc-cyan-bright);
+    margin: 0;
+}
+
+.section-heading--sub {
+    margin-top: 1.25rem;
+}
+
+.section-heading--sub h3 {
+    font-family: var(--mc-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mc-cyan);
     margin: 0;
 }
 
@@ -504,6 +516,74 @@ label {
     color: var(--mc-text-dim);
 }
 
+/* Auto-rendered Django ModelForm fields (CRUD forms) */
+
+.form-field {
+    margin-bottom: 1.1rem;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form input[type="datetime-local"],
+form input[type="url"],
+form select,
+form textarea {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.5rem 0.7rem;
+    background: var(--mc-bg-alt);
+    border: 1px solid var(--mc-panel-border);
+    border-radius: 4px;
+    color: var(--mc-text);
+    font-family: var(--mc-sans);
+    font-size: 0.9rem;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--mc-cyan);
+}
+
+form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+form input[type="checkbox"],
+form input[type="radio"] {
+    width: auto;
+    margin-right: 0.4rem;
+}
+
+form input[type="file"] {
+    color: var(--mc-text-dim);
+    font-size: 0.85rem;
+}
+
+.field-help {
+    font-size: 0.75rem;
+    color: var(--mc-text-dim);
+    margin: 0.35rem 0 0;
+}
+
+.errorlist {
+    color: #f5a3a3;
+    font-size: 0.8rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.35rem 0;
+}
+
 /* Buttons */
 
 .btn {
@@ -517,6 +597,7 @@ label {
     text-transform: uppercase;
     border-radius: 4px;
     border: 1px solid var(--mc-panel-border);
+    cursor: pointer;
 }
 
 .btn--primary {
@@ -538,6 +619,29 @@ label {
 .btn--ghost:hover {
     background: rgba(95, 212, 255, 0.06);
     color: var(--mc-cyan-bright);
+}
+
+.btn--danger {
+    color: #ffd7d7;
+    background: rgba(245, 163, 163, 0.12);
+    border-color: #f5a3a3;
+}
+
+.btn--danger:hover {
+    background: #f5a3a3;
+    color: #2a0e0e;
+}
+
+.btn--small {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.68rem;
+}
+
+.actions-row {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
 }
 
 /* Definition list (detail pages) */

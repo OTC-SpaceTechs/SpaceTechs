@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Purchase Request #{{ purchase_request.pk }}{% endblock %}
+
+{% block content %}
+    <h1>Purchase Request #{{ purchase_request.pk }}</h1>
+
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'portal:finance:purchase-request-update' purchase_request.pk %}">Edit</a>
+        <a class="btn btn--danger" href="{% url 'portal:finance:purchase-request-delete' purchase_request.pk %}">Delete</a>
+    </div>
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Status</dt>
+            <dd><span class="badge badge--{{ purchase_request.status|lower }}">{{ purchase_request.get_status_display }}</span></dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Amount</dt>
+            <dd>${{ purchase_request.amount }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Project</dt>
+            <dd>
+                {% if purchase_request.project %}
+                <a href="{% url 'projects:project-detail' purchase_request.project.pk %}">{{ purchase_request.project.name }}</a>
+                {% else %}—{% endif %}
+            </dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Requested By</dt>
+            <dd>{% if purchase_request.requested_by %}{{ purchase_request.requested_by.user.get_full_name|default:purchase_request.requested_by.user.username }}{% else %}—{% endif %}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Approved By</dt>
+            <dd>{% if purchase_request.approved_by %}{{ purchase_request.approved_by.user.get_full_name|default:purchase_request.approved_by.user.username }}{% else %}—{% endif %}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Submitted</dt>
+            <dd>{{ purchase_request.created_at|date:"M j, Y g:i A" }}</dd>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel__header"><span>Purpose</span></div>
+        <div class="detail-grid__item">{{ purchase_request.purpose|linebreaksbr }}</div>
+    </div>
+
+    <a class="back-link" href="{% url 'portal:finance:purchase-request-list' %}">&larr; Back to Purchase Requests</a>
+{% endblock %}

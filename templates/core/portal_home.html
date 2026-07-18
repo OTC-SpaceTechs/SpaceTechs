@@ -11,39 +11,63 @@
             <dd>{{ member_count }}</dd>
         </div>
         <div class="detail-grid__item">
+            <dt>Projects</dt>
+            <dd>{{ project_count }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Upcoming Events</dt>
+            <dd>{{ upcoming_event_count }}</dd>
+        </div>
+        <div class="detail-grid__item">
             <dt>Equipment Records</dt>
             <dd>{{ equipment_count }}</dd>
         </div>
+        {% if is_finance_officer %}
         <div class="detail-grid__item">
             <dt>Pending Purchase Requests</dt>
             <dd>{{ pending_purchase_requests }}</dd>
         </div>
+        {% endif %}
     </div>
 
     <div class="cards">
-        <div class="card">
+        <a class="card" href="{% url 'portal:membership:member-list' %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'membership:member-list' %}">Members</a></h3>
+                <h3 class="card__title">Members</h3>
             </div>
             <p class="card__desc">Roster, join dates, and officer history.</p>
-        </div>
-        <div class="card">
+        </a>
+        <a class="card" href="{% url 'projects:project-list' %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'inventory:equipment-list' %}">Inventory</a></h3>
+                <h3 class="card__title">Projects</h3>
+            </div>
+            <p class="card__desc">Create and edit projects, documents, and tips.</p>
+        </a>
+        <a class="card" href="{% url 'events:event-list' %}">
+            <div class="card__header">
+                <h3 class="card__title">Events</h3>
+            </div>
+            <p class="card__desc">Create and edit the public event calendar.</p>
+        </a>
+        <a class="card" href="{% url 'portal:inventory:equipment-list' %}">
+            <div class="card__header">
+                <h3 class="card__title">Inventory</h3>
             </div>
             <p class="card__desc">Equipment tracking, custodians, and project checkouts.</p>
-        </div>
-        <div class="card">
+        </a>
+        <a class="card" href="{% url 'portal:search' %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'portal:search' %}">Search Documents &amp; Lessons Learned</a></h3>
+                <h3 class="card__title">Search Documents &amp; Tips</h3>
             </div>
             <p class="card__desc">Full-text search across project documentation.</p>
-        </div>
-        <div class="card">
+        </a>
+        {% if is_finance_officer %}
+        <a class="card" href="{% url 'portal:finance:purchase-request-list' %}">
             <div class="card__header">
-                <h3 class="card__title"><a href="{% url 'admin:finance_purchaserequest_changelist' %}">Finance</a></h3>
+                <h3 class="card__title">Finance</h3>
             </div>
-            <p class="card__desc">Purchase requests (managed in Django admin).</p>
-        </div>
+            <p class="card__desc">Submit and approve purchase requests. Treasurer, Chair, and Vice-Chair only.</p>
+        </a>
+        {% endif %}
     </div>
 {% endblock %}

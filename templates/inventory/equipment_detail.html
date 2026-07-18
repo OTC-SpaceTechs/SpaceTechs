@@ -5,6 +5,11 @@
 {% block content %}
     <h1>{{ item.name }}</h1>
 
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'portal:inventory:equipment-update' item.pk %}">Edit</a>
+        <a class="btn btn--danger" href="{% url 'portal:inventory:equipment-delete' item.pk %}">Delete</a>
+    </div>
+
     <div class="detail-grid">
         <div class="detail-grid__item">
             <dt>Quantity</dt>
@@ -47,5 +52,5 @@
     </div>
     {% endif %}
 
-    <a class="back-link" href="{% url 'inventory:equipment-list' %}">&larr; Back to Inventory</a>
+    <a class="back-link" href="{% url 'portal:inventory:equipment-list' %}">&larr; Back to Inventory</a>
 {% endblock %}

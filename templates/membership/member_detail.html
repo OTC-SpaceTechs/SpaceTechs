@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ member.user.get_full_name|default:member.user.username }}{% endblock %}
+
+{% block content %}
+    <h1>{{ member.user.get_full_name|default:member.user.username }}</h1>
+
+    <div class="actions-row">
+        <a class="btn btn--ghost" href="{% url 'portal:membership:member-update' member.pk %}">Edit</a>
+        <a class="btn btn--danger" href="{% url 'portal:membership:member-delete' member.pk %}">Delete</a>
+    </div>
+
+    <div class="detail-grid">
+        <div class="detail-grid__item">
+            <dt>Username</dt>
+            <dd>{{ member.user.username }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Join Date</dt>
+            <dd>{{ member.join_date }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Active</dt>
+            <dd>{{ member.active_status|yesno:"Yes,No" }}</dd>
+        </div>
+        <div class="detail-grid__item">
+            <dt>Major</dt>
+            <dd>{{ member.major|default:"—" }}</dd>
+        </div>
+    </div>
+
+    {% if member.bio %}
+    <div class="panel">
+        <div class="panel__header"><span>Bio</span></div>
+        <div class="detail-grid__item">{{ member.bio|linebreaksbr }}</div>
+    </div>
+    {% endif %}
+
+    <div class="section-heading">
+        <h2>Officer History</h2>
+        <a href="{% url 'portal:membership:officer-history-create' member.pk %}">+ Add Entry</a>
+    </div>
+    {% if member.officerhistory_set.all %}
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in member.officerhistory_set.all %}
+                <tr>
+                    <td>{{ entry.role.name }}</td>
+                    <td>{{ entry.start_date }}</td>
+                    <td>{{ entry.end_date|default:"Present" }}</td>
+                    <td>
+                        <a class="btn btn--ghost btn--small" href="{% url 'portal:membership:officer-history-update' entry.pk %}">Edit</a>
+                        <a class="btn btn--danger btn--small" href="{% url 'portal:membership:officer-history-delete' entry.pk %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="panel"><div class="empty-state">No officer history recorded.</div></div>
+    {% endif %}
+
+    <a class="back-link" href="{% url 'portal:membership:member-list' %}">&larr; Back to Members</a>
+{% endblock %}
