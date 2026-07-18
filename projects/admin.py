@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Component, Document, Project, Tip
+from .models import Document, Project, Tip
+from inventory.models import Equipment
 
 
 class DocumentInline(admin.TabularInline):
@@ -12,18 +13,16 @@ class TipInline(admin.TabularInline):
     model = Tip
     extra = 0
 
-
-class ComponentInline(admin.TabularInline):
-    model = Component
+class EquipmentInline(admin.TabularInline):
+    model = Equipment
     extra = 0
-
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['name', 'status', 'start_date']
     list_filter = ['status']
     search_fields = ['name', 'description']
-    inlines = [DocumentInline, ComponentInline, TipInline]
+    inlines = [DocumentInline, EquipmentInline, TipInline]
 
 
 @admin.register(Document)
@@ -38,9 +37,3 @@ class TipAdmin(admin.ModelAdmin):
     list_display = ['question', 'project', 'category', 'created_at']
     list_filter = ['category']
     search_fields = ['question', 'short_answer', 'content']
-
-
-@admin.register(Component)
-class ComponentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'project', 'quantity', 'cost', 'supplier']
-    search_fields = ['name', 'supplier', 'notes']
