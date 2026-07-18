@@ -62,10 +62,10 @@ A phased, check-as-you-go plan for building out the Django project. Each phase b
 
 Build this in sub-steps — don't try to do it all in one migration.
 
-- [ ] **4a.** `Project` model: `name`, `description`, `status` (active/archived), `start_date`
-- [ ] **4b.** `Document` model: FK to `Project`, `title`, `file` (FileField) or `content` (TextField), `doc_type` (design / research / procedure / results)
-- [ ] **4c.** `ComponentInventory` model: FK to `Project`, `name`, `quantity`, `cost`, `supplier`, `notes`
-- [ ] **4d.** `LessonLearned` model — this is your weather-balloon-notes structure, formalized:
+- [x] **4a.** `Project` model: `name`, `description`, `status` (active/archived), `start_date`
+- [x] **4b.** `Document` model: FK to `Project`, `title`, `file` (FileField) or `content` (TextField), `doc_type` (design / research / procedure / results)
+- [x] **4c.** `ComponentInventory` model: FK to `Project`, `name`, `quantity`, `cost`, `supplier`, `notes`
+- [x] **4d.** `LessonLearned` model — this is your weather-balloon-notes structure, formalized:
   - FK to `Project`, `question`, `answer`, `category` (e.g. "sealing," "payload," "FAA/comms"), optional `image` field
   - This turns scattered PDFs/notes into something searchable
 - [ ] Admin registration for all four, with inlines (e.g. show `LessonLearned` entries inline on the `Project` admin page)
